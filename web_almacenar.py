@@ -6,7 +6,7 @@
 import json
 import urllib.request
 import psycopg2
-import ssl
+import os
 
 def tCamaras(lista=[], *lst):
 	sumT = 0
@@ -27,12 +27,12 @@ def tCamaras(lista=[], *lst):
 	return [sumT, auxA, auxC, auxM]
 	
 def jCamaras(numero):
-	context = ssl._create_unverified_context()
-	fo = open("C:\\Users\\Administrator\\Documents\\bot_telegram\\link.txt", "r+")
+	__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+	fo = open(os.path.join(__location__,"link.txt"), "r+")
 	link = fo.read(100);
 	camUrl = link + str(numero)
 	fo.close()
-	aux =  json.loads(((urllib.request.urlopen(camUrl, context=context)).read()).decode("utf-8"))
+	aux =  json.loads(((urllib.request.urlopen(camUrl)).read()).decode("utf-8"))
 	return aux
 
 def imprimir(msg):
@@ -111,8 +111,7 @@ def guardar(idd, resp=[], *res):
 		WHERE id = %(id)s;""",{'ocupados': resp[2], 'caidas': resp[1],'mante': resp[3],'total': resp[0], 'id':idd})
 
 try:
-	connect_str = "dbname='TELEGRAM' user='postgres' host='localhost' " + \
-		"password='3st@d1st1c@s2016'"
+	connect_str = "dbname='TELEGRAM' user='postgres' host='localhost' password='jose.123456'"
 	conn = psycopg2.connect(connect_str)
 	cursor = conn.cursor()
 	guardar(1,(texto_camaras("Samborondon")))
