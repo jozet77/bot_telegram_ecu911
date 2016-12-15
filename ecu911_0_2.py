@@ -9,9 +9,11 @@ import ast
 import logging
 import json
 import urllib.request
+import os
 from telebot import types
 
-fo = open("C:\\Users\\Administrator\\Documents\\bot_telegram\\token.txt", "r+")
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+fo = open(os.path.join(__location__,"token.txt"), "r+")
 token = fo.read(45);
 fo.close()
 bot = telebot.TeleBot(token)

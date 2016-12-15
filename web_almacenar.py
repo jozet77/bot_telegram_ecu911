@@ -28,7 +28,8 @@ def tCamaras(lista=[], *lst):
 	
 def jCamaras(numero):
 	context = ssl._create_unverified_context()
-	fo = open("C:\\Users\\Administrator\\Documents\\bot_telegram\\link.txt", "r+")
+	__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+	fo = open(os.path.join(__location__,"link.txt"), "r+")
 	link = fo.read(100);
 	camUrl = link + str(numero)
 	fo.close()
