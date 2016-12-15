@@ -11,7 +11,7 @@ import json
 import urllib.request
 from telebot import types
 
-fo = open("C:\\Users\\Administrator\\Documents\\bot_telegram\\token.txt", "r+")
+fo = open("token.txt", "r+")
 token = fo.read(45);
 fo.close()
 bot = telebot.TeleBot(token)
@@ -30,7 +30,7 @@ def texto_camaras(texto):
 		Favor intentar más tarde.
 		'''
 	try:
-		connect_str = "dbname='TELEGRAM' user='postgres' host='localhost' password='3st@d1st1c@s2016'"
+		connect_str = "dbname='TELEGRAM' user='postgres' host='localhost' password='jose.123456'"
 		# use our connection values to establish a connection
 		conn = psycopg2.connect(connect_str)
 		# create a psycopg2 cursor that can execute queries
@@ -41,8 +41,8 @@ def texto_camaras(texto):
 		print (respuesta)
 		texto_respuesta = '''Centro: ''' + texto +'''
 			Total de Camaras: ''' + str(respuesta[0][0]) + '''
-			Camaras Operativas: ''' + str(respuesta[0][2]) + '''
-			Camaras No Operativas: ''' + str(respuesta[0][1]) + '''
+			Camaras Operativas: ''' + str(respuesta[0][1]) + '''
+			Camaras No Operativas: ''' + str(respuesta[0][2]) + '''
 			Camaras en Mantenimiento: ''' + str(respuesta[0][3]) +'''
 			'''
 		#conn.commit()
