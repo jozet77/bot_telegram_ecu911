@@ -6,6 +6,7 @@
 import json
 import urllib.request
 import psycopg2
+import os
 import ssl
 
 def tCamaras(lista=[], *lst):
@@ -16,14 +17,18 @@ def tCamaras(lista=[], *lst):
 	auxx = ""
 	for canton in lista:
 		auxx = jCamaras(canton)
-		sumT = sumT + len(auxx['data'])
-		for cam in auxx['data']:
-			if(cam['estado'] == "Operativa"):
-				auxA = auxA + 1
-			elif(cam['estado'] == "No Operativa"):
-				auxC = auxC + 1
-			elif(cam['estado'] == "Con Solicitud de Mantenimiento"):
-				auxM = auxM + 1
+		print (canton)
+		if(not auxx['data']):
+			print (" -> " + str(canton) + " sin datos")
+		else:
+			sumT = sumT + len(auxx['data'])
+			for cam in auxx['data']:
+				if(cam['estado'] == "Operativa"):
+					auxA = auxA + 1
+				elif(cam['estado'] == "No Operativa"):
+					auxC = auxC + 1
+				elif(cam['estado'] == "Con Solicitud de Mantenimiento"):
+					auxM = auxM + 1
 	return [sumT, auxA, auxC, auxM]
 	
 def jCamaras(numero):
@@ -54,7 +59,7 @@ def texto_camaras(texto):
 		respuesta = tCamaras(lst)
 	
 	if (texto == "Austro"):
-		lst = [27,28,29,30,31,32,33,34,35,26,36,37,38,39,40,48,49,50.51,52,53,54]
+		lst = [27,28,29,30,31,32,33,34,35,26,36,37,38,39,40,48,49,50,51,52,53,54]
 		respuesta = tCamaras(lst)
 	
 	if (texto == "Macas"):
@@ -78,7 +83,7 @@ def texto_camaras(texto):
 		respuesta = tCamaras(lst)
 	
 	if (texto == "Portoviejo"):
-		lst = [164,165,166,167,168,169,170,171,173,174,175,176,177178,179,180,181,182,183,184,185,162]
+		lst = [164,165,166,167,168,169,170,171,173,174,175,176,177,178,179,180,181,182,183,184,185,162]
 		respuesta = tCamaras(lst)
 		
 	if (texto == "Santo Domingo"):
@@ -112,8 +117,7 @@ def guardar(idd, resp=[], *res):
 		WHERE id = %(id)s;""",{'ocupados': resp[2], 'caidas': resp[1],'mante': resp[3],'total': resp[0], 'id':idd})
 
 try:
-	connect_str = "dbname='TELEGRAM' user='postgres' host='localhost' " + \
-		"password='3st@d1st1c@s2016'"
+	connect_str = "dbname='TELEGRAM' user='postgres' host='localhost' password='3st@d1st1c@s2016'"
 	conn = psycopg2.connect(connect_str)
 	cursor = conn.cursor()
 	guardar(1,(texto_camaras("Samborondon")))
